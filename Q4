@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+class InsufficientFundsException {};
+class BankAccount {
+private:
+    int balance;
+
+public:
+    BankAccount(int initialBalance) : balance(initialBalance) {}
+    void withdraw(int amount) {
+        if (amount > balance) {
+            throw InsufficientFundsException();
+        }
+        balance -= amount;
+        cout << "Withdrawal successful! New Balance: $" << balance << endl;
+    }
+    void displayBalance() const {
+        cout << "Current Balance: $" << balance << endl;
+    }
+};
+
+int main() {
+    BankAccount account(500);
+    int amount;
+    account.displayBalance();
+    cout << "Enter withdrawal amount: $";
+    cin >> amount;
+    try {
+        account.withdraw(amount);
+    } catch (InsufficientFundsException) {
+        cout << "Error: Insufficient funds to complete withdrawal!" << endl;
+    }
+    return 0;
+}
