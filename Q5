@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+T findMax(T arr[], int size) {
+    T max = arr[0];
+    for (int i = 1; i < size; ++i) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    int intArr[] = {10, 20, 5, 30, 25};
+    int intSize = sizeof(intArr) / sizeof(intArr[0]);
+    cout << "Array: [10, 20, 5, 30, 25]" << endl;
+    cout << "Maximum: " << findMax(intArr, intSize) << endl;
+    const char* strArr[] = {"Apple", "Mango", "Banana", "Peach"};
+    int strSize = sizeof(strArr) / sizeof(strArr[0]);
+    cout << "\nArray: [\"Apple\", \"Mango\", \"Banana\", \"Peach\"]" << endl;
+    cout << "Maximum: " << findMax(strArr, strSize) << endl;
+    return 0;
+}
