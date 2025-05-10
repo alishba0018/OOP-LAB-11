@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+class OutOfBoundsException {};
+template <typename T>
+class SmartArray {
+private:
+    T* data;
+    int size;
+
+public:
+    SmartArray(int s) {
+        size = s;
+        data = new T[size];
+    }
+    ~SmartArray() {
+        delete[] data;
+    }
+    T& operator[](int index) {
+        if (index < 0 || index >= size) {
+            throw OutOfBoundsException();
+        }
+        return data[index];
+    }
+    int getSize() const {
+        return size;
+    }
+};
+
+int main() {
+    int n;
+    cout << "Array size: ";
+    cin >> n;
+    SmartArray<int> intArray(n);
+    cout << "Enter elements: ";
+    for (int i = 0; i < n; ++i) {
+        cin >> intArray[i];
+    }
+    try {
+        cout << "Accessing index 2: " << intArray[2] << endl;
+        cout << "Accessing index 5: " << intArray[5] << endl;  // Will throw
+    } catch (OutOfBoundsException) {
+        cout << "OutOfBoundsException caught: Invalid index access attempted!" << endl;
+    }
+    SmartArray<const char*> strArray(3);
+    strArray[0] = "Alpha";
+    strArray[1] = "Beta";
+    strArray[2] = "Gamma";
+
+    try {
+        cout << "\nAccessing string index 1: " << strArray[1] << endl;
+        cout << "Accessing string index 3: " << strArray[3] << endl;  // Will throw
+    } catch (OutOfBoundsException) {
+        cout << "OutOfBoundsException caught: Invalid index access attempted!" << endl;
+    }
+    return 0;
+}
